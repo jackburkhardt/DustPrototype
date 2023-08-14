@@ -10,8 +10,8 @@ namespace Code
         [SerializeField] private Camera _chaseCam;
         private ShipControls _shipControls;
         
-        private const float MAX_CHASE_DISTANCE = 20f;
-        private const float MIN_CHASE_DISTANCE = 5f;
+        [SerializeField] float MAX_CHASE_DISTANCE = 20f;
+        [SerializeField] float MIN_CHASE_DISTANCE = 5f;
 
         private void Awake()
         {
