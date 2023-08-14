@@ -28,8 +28,9 @@ namespace Code
             
             if (doMovement)
             {
-                _moveProgress += _movementSpeed * Time.deltaTime;
-                transform.position = Vector3.Lerp(_movementAnchor1.position, _movementAnchor2.position, _moveProgress % 1.0f);
+                // oscillate between two points
+                _moveProgress = Mathf.PingPong(Time.fixedTime * _movementSpeed, 1.0f);
+                transform.position = Vector3.Lerp(_movementAnchor1.position, _movementAnchor2.position, _moveProgress);
             }
         }
     }
