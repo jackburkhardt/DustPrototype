@@ -103,3 +103,6 @@ fmod_editor.log
 # Individual user settings
 /[Aa]ssets/StreamingAssets/settings.json
 /[Aa]ssets/StreamingAssets/settings.json.meta
+Assets/Editor.meta
+*.meta
+.vsconfig

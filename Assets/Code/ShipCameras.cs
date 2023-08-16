@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using UnityEngine;
 
 namespace Code
@@ -6,6 +7,7 @@ namespace Code
 
     public class ShipCameras : MonoBehaviour
     {
+        [SerializeField] private Animator animator;
         [SerializeField] private Camera _nadirCam;
         [SerializeField] private Camera _chaseCam;
         private ShipControls _shipControls;
@@ -20,11 +22,16 @@ namespace Code
 
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKey(KeyCode.C))
             {
-                _nadirCam.enabled = !_nadirCam.enabled;
-                _chaseCam.enabled = !_chaseCam.enabled;
+                animator.SetBool("Nadir", true);
+                // _nadirCam.enabled = !_nadirCam.enabled;
+                // _chaseCam.enabled = !_chaseCam.enabled;
             }
+
+            else animator.SetBool("Nadir", false);
+
+           // else animator.Play("Chase");
             
             // chase after the ship, varying camera distance depending on speed but keeping upright and above the ship
             if (_chaseCam.enabled)

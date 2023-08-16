@@ -26,9 +26,10 @@ public class ShipControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // rotate based on pitch, yaw, roll axis (numpad)
+        _transform.Rotate(-Input.GetAxis("FlightPitch") * _inputDamper, Input.GetAxis("Horizontal") * _inputDamper, Input.GetAxis("FlightRoll") * _inputDamper);
         // add force in the forward direction
-        _rb.AddForce(_transform.right * velocity);
+        _rb.AddForce(_transform.forward * velocity);
 
 
 
@@ -36,8 +37,7 @@ public class ShipControls : MonoBehaviour
         // for A and D keys, rotate around the Y axis for turning effect64
         //_transform.Rotate(0.0f, 0.0f, Input.GetAxis("Horizontal") * _inputDamper);
 
-        // rotate based on pitch, yaw, roll axis (numpad)
-        _transform.Rotate(Input.GetAxis("FlightRoll") * _inputDamper, Input.GetAxis("FlightPitch") * _inputDamper, Input.GetAxis("Horizontal") * _inputDamper);
+    
         
         // clamp speed
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxVelocity);
@@ -47,6 +47,8 @@ public class ShipControls : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
         float inputAxis = Input.GetAxis("Vertical");
         // update the acceleration counter if abssolute value of axis > 0.5
         if (Mathf.Abs(inputAxis) > 0.5f)
