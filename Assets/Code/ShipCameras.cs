@@ -24,17 +24,15 @@ namespace Code
         {
             if (Input.GetKey(KeyCode.C))
             {
-                animator.SetBool("Nadir", true);
+                animator?.SetBool("Nadir", true);
                 // _nadirCam.enabled = !_nadirCam.enabled;
                 // _chaseCam.enabled = !_chaseCam.enabled;
             }
 
-            else animator.SetBool("Nadir", false);
+            else animator?.SetBool("Nadir", false);
 
-           // else animator.Play("Chase");
-            
             // chase after the ship, varying camera distance depending on speed but keeping upright and above the ship
-            if (_chaseCam.enabled)
+            if (_chaseCam != null && _chaseCam.enabled)
             {
                 Vector3 forwardVec = transform.right;
                 
