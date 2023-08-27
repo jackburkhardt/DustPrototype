@@ -21,7 +21,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Yaw
+  - m_Name: Torque
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -78,7 +78,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Yaw
+  m_Name: Torque
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -213,7 +213,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Yaw
+    m_ConditionEvent: Torque
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3388342676386704292}
@@ -240,13 +240,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 3388342676386704292}
-    m_Position: {x: 100, y: 240, z: 0}
+    m_Position: {x: 40, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4388581241001292503}
-    m_Position: {x: 20, y: 420, z: 0}
+    m_Position: {x: -30, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 745084564403953746}
-    m_Position: {x: 360, y: 430, z: 0}
+    m_Position: {x: 230, y: 520, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6639299476945147399}
     m_Position: {x: 380, y: 200, z: 0}
@@ -321,7 +321,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Yaw
+    m_ConditionEvent: Torque
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 745084564403953746}

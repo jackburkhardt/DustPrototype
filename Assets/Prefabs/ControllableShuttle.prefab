@@ -113,8 +113,6 @@ GameObject:
   - component: {fileID: 63286516239714980}
   - component: {fileID: 1029037362082738891}
   - component: {fileID: 1087623523658235436}
-  - component: {fileID: 1782331358535693103}
-  - component: {fileID: 2512102012168902019}
   - component: {fileID: 2512102012168902016}
   m_Layer: 0
   m_Name: ControllableShuttle
@@ -237,8 +235,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.081195936, y: 0.065005966, z: 0.0222072}
-  m_Center: {x: 0.008339921, y: 0, z: 0.0011036007}
+  m_Size: {x: 24.06, y: 10.79, z: 24.379036}
+  m_Center: {x: 0, y: 0, z: -1.4604816}
 --- !u!95 &1029037362082738891
 Animator:
   serializedVersion: 5
@@ -273,12 +271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 0
-  maxVelocity: 35
+  maxVelocity: 100
   accelerationRate: 0.3
   decelerationRate: 0.18
   _inputDamper: 0.3
   _thrustForce: 10
-  _torqueDamper: 0.1
+  _torqueDamper: 0.5
+  _maxThrustDamper: 0.5
+  animator: {fileID: 1029037362082738891}
   nozzles:
   - direction: {x: 1, y: 0, z: 1}
     nozzleTransform: {fileID: 2083755051347057700}
@@ -352,40 +352,6 @@ MonoBehaviour:
     nozzleTransform: {fileID: 4371051123279214465}
     nozzleEffect: {fileID: 4371051123279214464}
     MovementType: 1
---- !u!114 &1782331358535693103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512102012168902022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592866d7f4ff43c983d07f351ea72b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1029037362082738891}
-  _nadirCam: {fileID: 0}
-  _chaseCam: {fileID: 0}
-  MAX_CHASE_DISTANCE: 20
-  MIN_CHASE_DISTANCE: 5
---- !u!114 &2512102012168902019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512102012168902022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592866d7f4ff43c983d07f351ea72b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1029037362082738891}
-  _nadirCam: {fileID: 0}
-  _chaseCam: {fileID: 0}
-  MAX_CHASE_DISTANCE: 20
-  MIN_CHASE_DISTANCE: 5
 --- !u!114 &2512102012168902016
 MonoBehaviour:
   m_ObjectHideFlags: 0

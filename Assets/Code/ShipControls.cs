@@ -21,10 +21,12 @@ public class ShipControls : MonoBehaviour
     int accelerationCounter = 0;
 
     [SerializeField] private float _thrustForce = 10f;
-    [SerializeField] private float _torqueDamper = 0.1f;
+    [SerializeField] private float _torqueDamper = 0.5f;
+    [SerializeField] private float _maxThrustDamper = 0.5f;
     private bool _shiftHeld;
     private bool _ctrlHeld;
     private Vector2 _moveInput;
+    [SerializeField] private Animator animator;
 
 
     [System.Serializable]
@@ -53,6 +55,8 @@ public class ShipControls : MonoBehaviour
         this._transform = GetComponent<Transform>();
         DebugDisplay.AddVariable("Velocity", velocity);
 
+        _rb.centerOfMass = Vector3.zero;
+
         //turn off all VFX
         foreach (var nozzle in nozzles)
         {
@@ -65,21 +69,16 @@ public class ShipControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // rotate based on pitch, yaw, roll axis (numpad)
-        //_rb.AddTorque(-Input.GetAxis("FlightPitch") * _inputDamper, Input.GetAxis("Horizontal") * _inputDamper, Input.GetAxis("FlightRoll") * _inputDamper);
-        // add force in the forward direction
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            animator?.SetBool("Nadir", true);
+        }
 
-       
-
-
-
-
-
-        // for A and D keys, rotate around the Y axis for turning effect
-        //_transform.Rotate(0.0f, 0.0f, Input.GetAxis("Horizontal") * _inputDamper);
-
-
+        else if (Input.GetKeyUp(KeyCode.C))
+        {
+            animator?.SetBool("Nadir", false);
+        }
 
         // clamp speed
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxVelocity);
@@ -88,14 +87,13 @@ public class ShipControls : MonoBehaviour
     public void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
-        Debug.Log(_moveInput);
     }
 
     public void OnModifierA(InputValue value)
     {
-        if (value.Get<float>() < 0.5f) { _shiftHeld = false; return; }
+        if (value.Get<float>() < 0.5f) { _shiftHeld = false; animator?.SetBool("Strafe", false); return; }
 
-
+        //lil nozzle flash effect
         { StopAllCoroutines(); StartCoroutine(OnStrafeStart()); }
 
         IEnumerator OnStrafeStart()
@@ -114,15 +112,17 @@ public class ShipControls : MonoBehaviour
             };
 
             _shiftHeld = true;
+            animator?.SetBool("Strafe", true);
         }
     }
 
     public void OnModifierB(InputValue value)
     {
-        if (value.Get<float>() < 0.5f) { _ctrlHeld = false; return; }
+        if (value.Get<float>() < 0.5f) { _ctrlHeld = false; animator?.SetBool("Torque", false); return; }
 
         { StopAllCoroutines(); StartCoroutine(OnTorqueStart()); }
 
+        //lil nozzle flash effect
         IEnumerator OnTorqueStart()
         {
             foreach (var nozzle in nozzles)
@@ -139,6 +139,7 @@ public class ShipControls : MonoBehaviour
             };
 
             _ctrlHeld = true;
+            animator?.SetBool("Torque", true);
         }
 
     }
@@ -149,14 +150,15 @@ public class ShipControls : MonoBehaviour
 
         foreach (var nozzle in nozzles)
         {
+            //checks if nozzle is aligned with desired movement direction. values closer to 1 are more aligned
 
             float alignmentToDesiredDirection = Vector3.Dot(nozzle.direction.normalized, -desiredMovementDirection);
 
             if (alignmentToDesiredDirection > 0.5f) // This nozzle should be active
             {
                 nozzle.nozzleEffect.SetFloat("emissionRate", 16);
-                _rb.AddRelativeForce(Vector3.Scale(nozzle.direction.normalized, Vector3.forward) * _thrustForce * -alignmentToDesiredDirection);
-                _rb.AddTorque(Vector3.Scale(Vector3.up, nozzle.direction.normalized) * _thrustForce * _torqueDamper * alignmentToDesiredDirection);
+                _rb.AddRelativeForce(Vector3.Scale(nozzle.direction.normalized, Vector3.forward) * _thrustForce * -alignmentToDesiredDirection * _maxThrustDamper);
+                _rb.AddRelativeTorque(Vector3.Scale(Vector3.up, nozzle.direction.normalized) * _thrustForce * _torqueDamper * alignmentToDesiredDirection);
 
             }
             else
@@ -174,7 +176,10 @@ public class ShipControls : MonoBehaviour
 
         foreach (var nozzle in nozzles)
         {
+            
             if (nozzle.MovementType != NozzleMovement.Strafe) continue;
+
+            //checks if nozzle is aligned with desired movement direction. values closer to 1 are more aligned
 
             float alignmentToDesiredDirection = Vector3.Dot(nozzle.direction.normalized, -desiredMovementDirection);
 
@@ -201,12 +206,14 @@ public class ShipControls : MonoBehaviour
 
             if (nozzle.MovementType != NozzleMovement.Torque) continue;
 
+            //checks if nozzle is aligned with desired movement direction. values closer to 1 are more aligned
+
             float alignmentToDesiredDirection = Vector3.Dot(Vector3.Scale(new Vector3(1,0,1), nozzle.direction.normalized), desiredMovementDirection.normalized);
 
             if (alignmentToDesiredDirection > 0.5f) // This nozzle should be active
             {
                 nozzle.nozzleEffect.SetFloat("emissionRate", 16);
-                _rb.AddTorque(Vector3.Scale(desiredMovementDirection.Abs(), nozzle.direction.normalized) * _thrustForce * _torqueDamper * alignmentToDesiredDirection);
+                _rb.AddRelativeTorque(nozzle.direction.normalized * _thrustForce * _torqueDamper * alignmentToDesiredDirection);
             }
             else
             {
@@ -219,6 +226,7 @@ public class ShipControls : MonoBehaviour
 
     private void FixedUpdate()
     {
+ 
 
         if (_shiftHeld)
         {
