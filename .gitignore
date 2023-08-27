@@ -50,11 +50,6 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# Unity3D generated meta files
-*.pidb.meta
-*.pdb.meta
-*.mdb.meta
-
 # Unity3D generated file on crash reports
 sysinfo.txt
 
@@ -77,10 +72,6 @@ crashlytics-build.properties
 # Asset-related filters
 /[Aa]ssets/[O/o]riginal_assets/*
 **/.DS_Store
-*.aseprite.meta
-*.aseprite
-*.gif.meta
-*.gif
 
 # Never ignore DLLs in the FMOD subfolder.
 !/[Aa]ssets/Plugins/FMOD/**/lib/*
@@ -100,9 +91,3 @@ crashlytics-build.properties
 # Log files can be ignored.
 fmod_editor.log
 
-# Individual user settings
-/[Aa]ssets/StreamingAssets/settings.json
-/[Aa]ssets/StreamingAssets/settings.json.meta
-Assets/Editor.meta
-*.meta
-.vsconfig

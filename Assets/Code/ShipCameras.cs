@@ -31,6 +31,29 @@ namespace Code
 
             else animator?.SetBool("Nadir", false);
 
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                animator?.SetBool("Strafe", true);
+            }
+
+            else animator?.SetBool("Strafe", false);
+
+            if (Input.GetAxis("Vertical") > 0.5f || Input.GetAxis("Vertical") < -0.5f) 
+            {
+                animator?.SetBool("Forward", true);
+            }
+
+            else animator?.SetBool("Forward", false);
+
+
+            if (Input.GetAxis("Horizontal") > 0.5f || Input.GetAxis("Horizontal") < -0.5f)
+            {
+                animator?.SetBool("Yaw", true);
+            }
+
+            else animator?.SetBool("Yaw", false);
+
+
             // chase after the ship, varying camera distance depending on speed but keeping upright and above the ship
             if (_chaseCam != null && _chaseCam.enabled)
             {
